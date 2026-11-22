@@ -1,0 +1,3 @@
+R001|Sample One|Tools|5|Good
+R002|Sample Two|Electronics|8|New
+R003|Sample Three|Furniture|12|Fair

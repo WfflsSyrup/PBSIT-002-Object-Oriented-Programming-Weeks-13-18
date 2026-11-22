@@ -8,11 +8,14 @@ public class ItemRecord {
     private String status;
 
     public ItemRecord(String id, String name, String category, int quantity, String status) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
+        this.id = validateText(id, "Record ID");
+        this.name = validateText(name, "Record name");
+        this.category = validateText(category, "Record category");
+        this.status = validateText(status, "Record status");
+        if (quantity < 1) {
+            throw new IllegalArgumentException("Quantity must be greater than zero.");
+        }
         this.quantity = quantity;
-        this.status = status;
     }
 
     public String getId() {
@@ -36,27 +39,41 @@ public class ItemRecord {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = validateText(name, "Record name");
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.category = validateText(category, "Record category");
     }
 
     public void setQuantity(int quantity) {
+        if (quantity < 1) {
+            throw new IllegalArgumentException("Quantity must be greater than zero.");
+        }
         this.quantity = quantity;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = validateText(status, "Record status");
+    }
+
+    private static String validateText(String value, String fieldLabel) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(fieldLabel + " is required.");
+        }
+        if (value.contains("|")) {
+            throw new IllegalArgumentException("Record fields must not contain the '|' delimiter.");
+        }
+        return value.trim();
     }
 
     public String toDataLine() {
-        return "";
+        return id + "|" + name + "|" + category + "|" + quantity + "|" + status;
     }
 
     @Override
     public String toString() {
-        return "";
+        return String.format("ID: %s | Name: %s | Category: %s | Quantity: %d | Status: %s",
+                id, name, category, quantity, status);
     }
 }
