@@ -3,18 +3,16 @@ package model;
 public class ItemRecord {
     private final String id;
     private String name;
+    private String category;
     private int quantity;
+    private String status;
 
-    public ItemRecord(String id, String name, int quantity) {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("Record ID is required.");
-        }
-        if (id.contains("|")) {
-            throw new IllegalArgumentException("Record fields must not contain the '|' delimiter.");
-        }
-        this.id = id.trim();
-        setName(name);
-        setQuantity(quantity);
+    public ItemRecord(String id, String name, String category, int quantity, String status) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.quantity = quantity;
+        this.status = status;
     }
 
     public String getId() {
@@ -25,33 +23,40 @@ public class ItemRecord {
         return name;
     }
 
-    public void setName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Record name is required.");
-        }
-        if (name.contains("|")) {
-            throw new IllegalArgumentException("Record fields must not contain the '|' delimiter.");
-        }
-        this.name = name.trim();
+    public String getCategory() {
+        return category;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public void setQuantity(int quantity) {
-        if (quantity < 1) {
-            throw new IllegalArgumentException("Quantity must be greater than zero.");
-        }
         this.quantity = quantity;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String toDataLine() {
-        return id + "|" + name + "|" + quantity;
+        return "";
     }
 
     @Override
     public String toString() {
-        return String.format("%s | %s | Quantity: %d", id, name, quantity);
+        return "";
     }
 }
