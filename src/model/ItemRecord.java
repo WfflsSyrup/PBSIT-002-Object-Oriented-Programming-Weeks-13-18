@@ -9,6 +9,9 @@ public class ItemRecord {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Record ID is required.");
         }
+        if (id.contains("|")) {
+            throw new IllegalArgumentException("Record fields must not contain the '|' delimiter.");
+        }
         this.id = id.trim();
         setName(name);
         setQuantity(quantity);
@@ -26,6 +29,9 @@ public class ItemRecord {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Record name is required.");
         }
+        if (name.contains("|")) {
+            throw new IllegalArgumentException("Record fields must not contain the '|' delimiter.");
+        }
         this.name = name.trim();
     }
 
@@ -38,6 +44,10 @@ public class ItemRecord {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
         this.quantity = quantity;
+    }
+
+    public String toDataLine() {
+        return id + "|" + name + "|" + quantity;
     }
 
     @Override

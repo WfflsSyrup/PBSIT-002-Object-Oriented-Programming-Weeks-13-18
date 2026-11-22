@@ -35,4 +35,17 @@ public class RecordManager {
     public List<ItemRecord> getAllRecords() {
         return Collections.unmodifiableList(records);
     }
+
+    public void replaceAll(List<ItemRecord> loadedRecords) throws DuplicateRecordException {
+        for (int i = 0; i < loadedRecords.size(); i++) {
+            String id = loadedRecords.get(i).getId();
+            for (int j = i + 1; j < loadedRecords.size(); j++) {
+                if (id.equalsIgnoreCase(loadedRecords.get(j).getId())) {
+                    throw new DuplicateRecordException("Record ID " + id + " already exists.");
+                }
+            }
+        }
+        records.clear();
+        records.addAll(loadedRecords);
+    }
 }
